@@ -7,7 +7,7 @@ set -euo pipefail
 
 module load fastqc/0.11.8
 
-fastq_file=$1                                   #define variables
+fastq_file=$1                                   #Define variables
 outdir=$2
 echo "# Starting script fastqc.sh"              #Generate nice text
 date
