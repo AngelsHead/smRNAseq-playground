@@ -1,3 +1,4 @@
 data/
 *~
 results/fastqc
+multiqc_data
