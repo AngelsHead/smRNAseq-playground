@@ -21,6 +21,15 @@ conda activate bbmap
 mkdir results/trimmed
 bbduk.sh in=data/raw/fastq/R1-1_S1_L001_R1_001.fastq.gz in2=data/raw/fastq/R1-1_S1_L001_R2_001.fastq.gz out=results/trimmed/clean_R1.fq ref=data/ref/adapter.fasta ktrim=r k=23 mink=11 hdist=1 tpe tbo
 
+#Setting variables
+in1=data/raw/fastq/"*.gz"
+bash scripts/trimming.sh "$in1"
+
+#Loop?
+for in1 in data/raw/fastq/*_R1_001.fastq.gz; do
+    sbatch scripts/trimming.sh "$in1" 
+done
+
 
 #--------------------------------------------------------
 #MAPPING
@@ -30,6 +39,7 @@ conda activate ncbi_datasets
 datasets download genome accession GCA_009761285.1 --filename PRSTRT_AglyBT1_v1
 
 #Lets try srnamapper instead of bowtie just for fun..
+module load miniconda3/23.3.1-py310
 conda activate srmamapper
 
 #test run with one
