@@ -8,11 +8,18 @@ done
 
 #----------------------------------------------------------
 #MULTIQC
+module load miniconda3/23.3.1-py310
 conda activate multiqc
 multiqc results/fastqc
 
 #---------------------------------------------------------
-#TRIMGALORE
+#TRIMMING
+module load miniconda3/23.3.1-py310
+conda activate bbmap
+
+#Single test
+mkdir results/trimmed
+bbduk.sh in=data/raw/fastq/R1-1_S1_L001_R1_001.fastq.gz in2=data/raw/fastq/R1-1_S1_L001_R2_001.fastq.gz out=results/trimmed/clean_R1.fq ref=data/ref/adapter.fasta ktrim=r k=23 mink=11 hdist=1 tpe tbo
 
 
 #--------------------------------------------------------
