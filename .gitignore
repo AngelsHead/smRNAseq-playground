@@ -2,3 +2,6 @@ data/
 *~
 results/fastqc
 multiqc_data
+slurm*
+outputs/
+results/trimmed
