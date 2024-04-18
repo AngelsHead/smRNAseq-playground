@@ -47,17 +47,22 @@ module load miniconda3/23.3.1-py310
 conda activate ncbi_datasets
 datasets download genome accession GCA_009761285.1 --filename PRSTRT_AglyBT1_v1
 
+#Build index for genome
+module load bwa
+bwa index data/ref/GCA_009761285.1_PRSTRT_AglyBT1_v1_genomic.fna
+
 #Lets try srnamapper instead of bowtie just for fun..
 module load miniconda3/23.3.1-py310
 conda activate srmamapper
 
-module load bwa
-bwa index data/ref/GCA_009761285.1_PRSTRT_AglyBT1_v1_genomic.fna
-
 #test run with one
 srnaMapper -r results/trimmed/clean_R1-1_R1.fq -g data/ref/GCA_009761285.1_PRSTRT_AglyBT1_v1_genomic.fna -o results/mapped/test.sam -t 1
 
-sbatch scripts/mapping.sh
+#Loop time
+for in in results/trimmed/clean*; do
+    sbatch scripts/mapping.sh "$in" 
+done
+
 
 #--------------------------------------------------------
 #QUANTIFICATION WITH SALMON 
