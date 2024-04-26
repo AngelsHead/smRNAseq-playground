@@ -45,11 +45,13 @@ done
 #get annotated genome
 module load miniconda3/23.3.1-py310
 conda activate ncbi_datasets
-datasets download genome accession GCA_009761285.1 --filename PRSTRT_AglyBT1_v1
+datasets download genome accession GCA_009761285.1 --filename data/ref/genome_AglyBT1_v1.gz
 
 #Build index for genome
 module load bwa
 bwa index data/ref/GCA_009761285.1_PRSTRT_AglyBT1_v1_genomic.fna
+
+bwa index data/ref/genome_AglyBT1_v1
 
 #Lets try srnamapper instead of bowtie just for fun..
 module load miniconda3/23.3.1-py310
@@ -101,4 +103,10 @@ for sample in results/mapped/clean*; do
     done
 
 #Testing with one
-./bin/salmon quant -t agly_transcriptome.fasta -l <LIBTYPE> -a results/mapped/converted/clean_R1-1_R1.fq.sam.fastq -o salmon_quant
+module load miniconda3/23.3.1-py310
+conda activate salmon
+
+salmon quant -t data/ref/agly_transcriptome.fasta -l IU -a results/mapped/converted/clean_R1-1_R1.fq.sam.fastq -o results/salmon_quant
+
+
+
