@@ -46,7 +46,6 @@ done
 module load miniconda3/23.3.1-py310
 conda activate ncbi_datasets
 datasets download genome accession GCA_009761285.1 --include gff3,rna,cds,protein,genome,seq-report
-
 unzip ncbi_dataset.zip
 mv ncbi_dataset data/ref
 
@@ -74,4 +73,10 @@ done
 module load miniconda3/23.3.1-py310
 conda activate mmquant
 
+#Testing one
 mmquant -a data/ref/ncbi_dataset/data/GCA_009761285.1/genomic.gff -r results/mapped/clean_R1-1_R1.fq.sam
+
+#Loop time
+for map in results/mapped/clean*; do
+    sbatch scripts/quant.sh "$map" 
+done
