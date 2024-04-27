@@ -45,11 +45,14 @@ done
 #get annotated genome
 module load miniconda3/23.3.1-py310
 conda activate ncbi_datasets
-datasets download genome accession GCA_009761285.1 --filename data/ref/genome_AglyBT1_v1.gz
+datasets download genome accession GCA_009761285.1 --include gff3,rna,cds,protein,genome,seq-report
+
+unzip ncbi_dataset.zip
+mv ncbi_dataset data/ref
 
 #Build index for genome
 module load bwa
-bwa index data/ref/GCA_009761285.1_PRSTRT_AglyBT1_v1_genomic.fna
+bwa index data/ref/ncbi_dataset/data/GCA_009761285.1/GCA_009761285.1_PRSTRT_AglyBT1_v1_genomic.fna
 
 bwa index data/ref/genome_AglyBT1_v1
 
@@ -65,48 +68,10 @@ for in in results/trimmed/clean*; do
     sbatch scripts/mapping.sh "$in" 
 done
 
-#ISSUE. Salmon needs alignments to TRANSCRIPTOME. So will try here:
-#get annotated PROTEOME
-curl https://sra-download.ncbi.nlm.nih.gov/traces/wgs03/wgs_aux/GB/SU/GBSU01/GBSU01.1.fsa_nt.gz -o data/ref/agly_transcriptome.fasta
-
-
-#Build index for genome
-module load bwa
-bwa index data/ref/agly_transcriptome.fasta
-
-#Lets try srnamapper instead of bowtie just for fun..
-module load miniconda3/23.3.1-py310
-conda activate srmamapper
-
-#test run with one
-srnaMapper -r results/trimmed/clean_R1-1_R1.fq -g data/ref/agly_transcriptome.fasta.sa -o results/mapped/test.sam -t 1
-
-#Loop time
-for in in results/trimmed/clean*; do
-    sbatch scripts/mapping.sh "$in" 
-done
-
-
-
 #--------------------------------------------------------
-#QUANTIFICATION WITH SALMON 
-
-#get transcriptome
-curl https://sra-download.ncbi.nlm.nih.gov/traces/wgs03/wgs_aux/GB/SU/GBSU01/GBSU01.1.fsa_nt.gz -o data/ref/agly_transcriptome.fasta
-
-#build SALMON index [MIGHT NOT BE NEEDED ACTUALLY]
-salmon index -t data/ref/agly_transcriptome.gz -i agly_index
-
-#Convert SAM files to FASTQ
-for sample in results/mapped/clean*; do
-    bash scripts/convert.sh "$sample"
-    done
-
-#Testing with one
+#QUANTIFICATION WITH MMQUANT 
+#I had to manually upload the genome file so it is in the correct format. It is agly_genome.gtf
 module load miniconda3/23.3.1-py310
-conda activate salmon
+conda activate mmquant
 
-salmon quant -t data/ref/agly_transcriptome.fasta -l IU -a results/mapped/converted/clean_R1-1_R1.fq.sam.fastq -o results/salmon_quant
-
-
-
+mmquant -a data/ref/ncbi_dataset/data/GCA_009761285.1/genomic.gff -r results/mapped/clean_R1-1_R1.fq.sam
