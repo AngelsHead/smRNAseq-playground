@@ -19,5 +19,10 @@ mkdir -p "$outdir"                              #Make outdir if needed
 output="$outdir"/clean_"$fileid".fq
 aref=data/ref/adapter.fasta
 
-#script w/ VARIABLES
+#Run it
 bbduk.sh in="$in1" in2="$in2" out="$output" ref="$aref" ktrim=r k=23 mink=11 hdist=1 tpe tbo
+
+# Final reporting
+echo
+echo "# Done running, good job!"
+date

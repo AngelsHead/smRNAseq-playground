@@ -21,5 +21,5 @@ fastqc --outdir "$outdir" "$fastq_file"
 
 # Final reporting
 echo
-echo "# Done with script fastqc.sh"
+echo "# Done running, good job!"
 date

@@ -24,4 +24,10 @@ echo "# Input file:   $in"
 echo "# Output dir:   $out"
 echo
 
+#Run it
 srnaMapper -r "$in" -g "$genome" -o "$out" -t 10
+
+# Final reporting
+echo
+echo "# Done running, good job!"
+date

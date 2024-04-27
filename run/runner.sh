@@ -1,6 +1,6 @@
 #FASTQC ANALYSIS
-
 module load fastqc/0.11.8
+
 # Run FastQC for each FASTQ file
 for fastq_file in data/raw/fastq/*fastq.gz; do
     sbatch scripts/fastqc.sh "$fastq_file" results/fastqc
@@ -53,7 +53,7 @@ mv ncbi_dataset data/ref
 module load bwa
 bwa index data/ref/ncbi_dataset/data/GCA_009761285.1/GCA_009761285.1_PRSTRT_AglyBT1_v1_genomic.fna
 
-#Lets try srnamapper instead of bowtie just for fun..
+#Lets try srnamapper..
 module load miniconda3/23.3.1-py310
 conda activate srmamapper
 
@@ -67,7 +67,6 @@ done
 
 #--------------------------------------------------------
 #QUANTIFICATION WITH MMQUANT 
-#I had to manually upload the genome file so it is in the correct format. It is agly_genome.gtf
 module load miniconda3/23.3.1-py310
 conda activate mmquant
 
