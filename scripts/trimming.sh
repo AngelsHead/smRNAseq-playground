@@ -12,7 +12,11 @@ conda activate bbmap
 in1=$1                          #bc you will put this dir exactly as an agurment
 in2=${in1/_R1/_R2}
 fileid=$(basename $in1 .fastq.gz)
-output=results/trimmed/clean_"$fileid".fq
+
+outdir=results/trimmed
+mkdir -p "$outdir"                              #Make outdir if needed
+
+output="$outdir"/clean_"$fileid".fq
 aref=data/ref/adapter.fasta
 
 #script w/ VARIABLES
