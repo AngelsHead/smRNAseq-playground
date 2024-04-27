@@ -5,3 +5,4 @@ multiqc_data
 slurm*
 outputs/
 results/trimmed
+ncbi_dataset.zip
