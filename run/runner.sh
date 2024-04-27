@@ -53,14 +53,12 @@ mv ncbi_dataset data/ref
 module load bwa
 bwa index data/ref/ncbi_dataset/data/GCA_009761285.1/GCA_009761285.1_PRSTRT_AglyBT1_v1_genomic.fna
 
-bwa index data/ref/genome_AglyBT1_v1
-
 #Lets try srnamapper instead of bowtie just for fun..
 module load miniconda3/23.3.1-py310
 conda activate srmamapper
 
 #test run with one
-srnaMapper -r results/trimmed/clean_R1-1_R1.fq -g data/ref/GCA_009761285.1_PRSTRT_AglyBT1_v1_genomic.fna -o results/mapped/test.sam -t 1
+srnaMapper -r results/trimmed/clean_R1-1_R1.fq -g data/ref/ncbi_dataset/data/GCA_009761285.1/GCA_009761285.1_PRSTRT_AglyBT1_v1_genomic.fna -o results/mapped/test.sam -t 1
 
 #Loop time
 for in in results/trimmed/clean*; do

@@ -13,6 +13,6 @@ conda activate srmamapper
 in="$1"
 fileid=$(basename $in)
 out=results/mapped/"$fileid".sam
-genome=data/ref/GCA_009761285.1_PRSTRT_AglyBT1_v1_genomic.fna
+genome=data/ref/ncbi_dataset/data/GCA_009761285.1/GCA_009761285.1_PRSTRT_AglyBT1_v1_genomic.fna
 
 srnaMapper -r "$in" -g "$genome" -o "$out" -t 10
