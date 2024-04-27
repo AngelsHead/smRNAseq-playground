@@ -12,7 +12,16 @@ conda activate srmamapper
 #Set variables
 in="$1"
 fileid=$(basename $in)
-out=results/mapped/"$fileid".sam
+outdir=results/mapped
+mkdir -p "$outdir"                              #Make outdir if needed
+out="$outdir"/"$fileid".sam
 genome=data/ref/ncbi_dataset/data/GCA_009761285.1/GCA_009761285.1_PRSTRT_AglyBT1_v1_genomic.fna
+
+#Generate nice text
+echo "# Starting script mapping.sh"
+date
+echo "# Input file:   $in"
+echo "# Output dir:   $out"
+echo
 
 srnaMapper -r "$in" -g "$genome" -o "$out" -t 10
