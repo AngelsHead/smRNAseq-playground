@@ -5,6 +5,8 @@
 #SBATCH --output=slurm-piRNA-trimming-%j.out
 set -euo pipefail
 
+#HARDCODED OUTDIR, GENOME, ADAPTER FILE
+
 module load miniconda3/23.3.1-py310
 conda activate bbmap
 

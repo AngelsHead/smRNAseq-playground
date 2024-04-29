@@ -23,6 +23,8 @@ for oldname in data/raw/fastq/*fastq.gz; do
     ln -sv $PWD/$oldname $newname
 done
 
+#OUTSIDE SCRIPT: Create fasta file with adapter sequnce. 
+
 module load miniconda3/23.3.1-py310
 conda activate bbmap
 

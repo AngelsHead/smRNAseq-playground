@@ -6,6 +6,8 @@
 #SBATCH --cpus-per-task=10
 set -euo pipefail
 
+#HARDCODED OUTDIR AND GENOME 
+
 module load miniconda3/23.3.1-py310
 conda activate srmamapper
 
